@@ -1,0 +1,199 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  JUDGE
+}
+
+enum CompetitionStatus {
+  DRAFT
+  REGISTRATION
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum ProjectStatus {
+  SUBMITTED
+  WITHDRAWN
+}
+
+enum RoundStatus {
+  PENDING
+  JUDGING_OPEN
+  JUDGING_CLOSED
+  COMPLETED
+}
+
+enum PromotionStatus {
+  PENDING
+  PROMOTED
+  ELIMINATED
+  INSUFFICIENT_REVIEWS
+}
+
+enum AdvancementRuleType {
+  TOP_N
+  TOP_PERCENT
+  SCORE_THRESHOLD
+}
+
+enum AssignmentStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+// Single instance competition config
+model Competition {
+  id              String            @id @default(cuid())
+  name            String
+  description     String?
+  status          CompetitionStatus @default(DRAFT)
+  startTime       DateTime
+  endTime         DateTime
+  
+  // JSON configurations for dynamic forms
+  registrationForm Json? // Field definitions for registration
+  submissionForm   Json? // Field definitions for project submission
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  regions         Region[]
+  rounds          Round[]
+  criteria        ScoringCriterion[]
+}
+
+model Region {
+  id            String      @id @default(cuid())
+  name          String
+  code          String      @unique
+  competitionId String
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  projects      Project[]
+}
+
+model ScoringCriterion {
+  id            String      @id @default(cuid())
+  name          String
+  description   String?
+  weight        Float       @default(1.0)
+  minScore      Float       @default(0)
+  maxScore      Float       @default(100)
+  competitionId String
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  scores        Score[]
+}
+
+model Round {
+  id              String              @id @default(cuid())
+  name            String              // e.g. "Preliminary", "Final"
+  sequence        Int                 // 1, 2, 3...
+  status          RoundStatus         @default(PENDING)
+  competitionId   String
+  competition     Competition         @relation(fields: [competitionId], references: [id])
+  
+  // Advancement rules (JSON: { type: TOP_N, value: 10 } etc.)
+  advancementRule Json?
+
+  projectRounds   ProjectRound[]
+  assignments     JudgeAssignment[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash  String?   // If using credentials auth
+  role          Role      @default(JUDGE)
+  isActive      Boolean   @default(true)
+  
+  assignments   JudgeAssignment[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Project {
+  id              String        @id @default(cuid())
+  name            String
+  description     String?
+  receiptNumber   String        @unique // Unique submission receipt
+  status          ProjectStatus @default(SUBMITTED)
+  
+  // JSON data from dynamic forms
+  registrationData Json?
+  submissionData   Json?
+  
+  regionId        String?
+  region          Region?       @relation(fields: [regionId], references: [id])
+  
+  projectRounds   ProjectRound[]
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model ProjectRound {
+  id              String          @id @default(cuid())
+  projectId       String
+  project         Project         @relation(fields: [projectId], references: [id])
+  roundId         String
+  round           Round           @relation(fields: [roundId], references: [id])
+  
+  avgScore        Float?          // Calculated average score for this round
+  promotionStatus PromotionStatus @default(PENDING)
+  
+  assignments     JudgeAssignment[]
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@unique([projectId, roundId])
+}
+
+model JudgeAssignment {
+  id              String           @id @default(cuid())
+  judgeId         String
+  judge           User             @relation(fields: [judgeId], references: [id])
+  projectRoundId  String
+  projectRound    ProjectRound     @relation(fields: [projectRoundId], references: [id])
+  roundId         String           // Redundant but useful for queries
+  round           Round            @relation(fields: [roundId], references: [id])
+  
+  status          AssignmentStatus @default(PENDING)
+  totalScore      Float?           // Sum of weighted scores
+  feedback        String?
+  
+  scores          Score[]
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@unique([judgeId, projectRoundId])
+}
+
+model Score {
+  id              String           @id @default(cuid())
+  assignmentId    String
+  assignment      JudgeAssignment  @relation(fields: [assignmentId], references: [id])
+  criterionId     String
+  criterion       ScoringCriterion @relation(fields: [criterionId], references: [id])
+  
+  value           Float
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@unique([assignmentId, criterionId])
+}
