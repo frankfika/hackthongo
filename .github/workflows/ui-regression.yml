@@ -1,0 +1,27 @@
+name: UI Regression
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ui-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run i18n:check && npm run build
+      - name: Start app
+        run: npm run start -- -p 3000 & npx wait-on http://127.0.0.1:3000
+      - name: Cypress overflow regression
+        run: npm run test:overflow
+      - name: Backstop visual regression
+        run: npm run visual:test
