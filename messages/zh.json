@@ -1,0 +1,89 @@
+{
+  "Navigation": {
+    "home": "首页",
+    "docs": "文档",
+    "leaderboard": "排行榜",
+    "submit": "提交项目",
+    "login": "登录"
+  },
+  "Home": {
+    "title": "HackThonGo",
+    "subtitle": "极简单赛事黑客松管理系统。",
+    "submitBtn": "提交项目",
+    "viewDetails": "查看赛事详情",
+    "loginBtn": "评委/管理员登录",
+    "introTitle": "赛事详情",
+    "prizePool": "奖金池",
+    "timeline": "时间安排",
+    "status": "当前状态"
+  },
+  "Docs": {
+    "title": "赛事文档",
+    "description": "规则、指南与赛事详细信息。"
+  },
+  "Leaderboard": {
+    "title": "排行榜",
+    "description": "当前排名与晋级项目公示。"
+  },
+  "Submit": {
+    "title": "提交您的项目",
+    "closedTitle": "提交已关闭",
+    "closedDesc": "当前赛事暂不接受项目提交。",
+    "teamInfo": "团队/参赛者信息",
+    "projectInfo": "项目信息",
+    "submitBtn": "提交项目",
+    "submitting": "提交中...",
+    "successTitle": "提交成功！",
+    "successDesc": "感谢您提交项目。您的回执号是：",
+    "successNote": "请妥善保管此回执号。我们将通过邮件与您联系后续事宜。",
+    "returnHome": "返回首页",
+    "submitError": "提交项目失败",
+    "fields": {
+      "name": "姓名",
+      "email": "电子邮箱",
+      "phone": "电话号码",
+      "projectName": "项目名称",
+      "description": "项目描述",
+      "repoUrl": "代码仓库 URL",
+      "demoUrl": "演示视频/应用 URL"
+    }
+  },
+  "Admin": {
+    "dashboard": "管理员控制台",
+    "compStatus": "赛事状态",
+    "totalSubmissions": "总提交数",
+    "activeJudges": "活跃评委",
+    "quickActions": "快捷操作",
+    "editConfig": "编辑赛事配置",
+    "viewProjects": "查看所有项目",
+    "manageJudges": "管理评委",
+    "manageRounds": "管理轮次与分配"
+  },
+  "Judge": {
+    "title": "评委",
+    "notFound": "未找到评审页面",
+    "loading": "正在加载评审任务..."
+  },
+  "Footer": {
+    "links": "快速链接",
+    "contact": "联系我们",
+    "copyright": "© 2026 HackThonGo. 保留所有权利。",
+    "tagline": "通过极简管理赋能创新。",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "home": "首页",
+    "about": "关于我们",
+    "services": "服务",
+    "adminDashboard": "管理控制台",
+    "adminProjects": "项目管理",
+    "adminJudges": "评委管理",
+    "adminRounds": "轮次管理",
+    "judgeDashboard": "评审控制台",
+    "judgeScoring": "评分任务",
+    "docs": "文档中心",
+    "leaderboard": "排行榜",
+    "wechat": "微信",
+    "weibo": "微博",
+    "linkedin": "LinkedIn"
+  }
+}

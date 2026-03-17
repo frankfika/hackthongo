@@ -1,17 +1,35 @@
 import { PrismaClient, Role } from '@prisma/client'
+import { hashPassword } from '../src/lib/security'
 
 const prisma = new PrismaClient()
 
 async function main() {
+  if (process.env.NODE_ENV === 'production') {
+    console.error('Seed script should not run in production. Aborting.');
+    process.exit(1);
+  }
+
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD || 'admin12345';
+  const judgePassword = process.env.SEED_JUDGE_PASSWORD || 'judge12345';
   // Create default competition
   // Use upsert to avoid error if it already exists
   const competition = await prisma.competition.upsert({
     where: { id: 'default-competition' },
-    update: {},
+    update: {
+      name: 'Global AI Hackathon 2026',
+      tagline: 'Build the future of intelligent systems.',
+      description: 'Join developers worldwide to create innovative AI solutions.',
+      prizePool: '$50,000 USD',
+      introMarkdown: '# Global AI Hackathon\n\nWelcome to the premier AI building event of the year. \n\n## Tracks\n- Generative AI\n- AI for Good\n- Enterprise Solutions\n\n## Judging Criteria\n1. Innovation (30%)\n2. Technical Complexity (30%)\n3. Business Value (20%)\n4. Presentation (20%)',
+    },
     create: {
       id: 'default-competition',
       name: 'HackThonGo MVP',
+      tagline: null,
       description: 'A simple hackathon management system.',
+      prizePool: null,
+      introMarkdown: null,
+      introGitbookUrl: null,
       startTime: new Date(),
       endTime: new Date(new Date().setDate(new Date().getDate() + 7)),
       status: 'REGISTRATION',
@@ -38,7 +56,7 @@ async function main() {
     create: {
       email: 'admin@example.com',
       name: 'Admin User',
-      passwordHash: 'admin123', // Plain text for MVP
+      passwordHash: hashPassword(adminPassword),
       role: Role.ADMIN,
     },
   })
@@ -52,7 +70,7 @@ async function main() {
     create: {
       email: 'judge1@example.com',
       name: 'Judge One',
-      passwordHash: 'judge123',
+      passwordHash: hashPassword(judgePassword),
       role: Role.JUDGE,
     },
   })
@@ -63,7 +81,7 @@ async function main() {
     create: {
       email: 'judge2@example.com',
       name: 'Judge Two',
-      passwordHash: 'judge123',
+      passwordHash: hashPassword(judgePassword),
       role: Role.JUDGE,
     },
   })

@@ -1,0 +1,89 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "docs": "Docs",
+    "leaderboard": "Leaderboard",
+    "submit": "Submit Project",
+    "login": "Login"
+  },
+  "Home": {
+    "title": "HackThonGo",
+    "subtitle": "The minimalist, single-event hackathon management system.",
+    "submitBtn": "Submit Project",
+    "viewDetails": "View Details",
+    "loginBtn": "Judge / Admin Login",
+    "introTitle": "Competition Details",
+    "prizePool": "Prize Pool",
+    "timeline": "Timeline",
+    "status": "Status"
+  },
+  "Docs": {
+    "title": "Documentation",
+    "description": "Rules, guidelines, and competition details."
+  },
+  "Leaderboard": {
+    "title": "Leaderboard",
+    "description": "Current rankings and promoted projects."
+  },
+  "Submit": {
+    "title": "Submit Your Project",
+    "closedTitle": "Submissions are closed",
+    "closedDesc": "The competition is not currently accepting submissions.",
+    "teamInfo": "Team / Participant Info",
+    "projectInfo": "Project Info",
+    "submitBtn": "Submit Project",
+    "submitting": "Submitting...",
+    "successTitle": "Submission Successful!",
+    "successDesc": "Thank you for submitting your project. Your receipt number is:",
+    "successNote": "Please keep this number for your records. We will contact you via email with further updates.",
+    "returnHome": "Return Home",
+    "submitError": "Failed to submit project",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "projectName": "Project Name",
+      "description": "Description",
+      "repoUrl": "Repository URL",
+      "demoUrl": "Demo URL"
+    }
+  },
+  "Admin": {
+    "dashboard": "Admin Dashboard",
+    "compStatus": "Competition Status",
+    "totalSubmissions": "Total Submissions",
+    "activeJudges": "Active Judges",
+    "quickActions": "Quick Actions",
+    "editConfig": "Edit Competition Config",
+    "viewProjects": "View All Projects",
+    "manageJudges": "Manage Judges",
+    "manageRounds": "Manage Rounds & Assignments"
+  },
+  "Judge": {
+    "title": "Judge",
+    "notFound": "Judge page not found",
+    "loading": "Loading assignments..."
+  },
+  "Footer": {
+    "links": "Quick Links",
+    "contact": "Contact",
+    "copyright": "© 2026 HackThonGo. All rights reserved.",
+    "tagline": "Empowering innovation through minimalist management.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "adminDashboard": "Admin Dashboard",
+    "adminProjects": "Project Management",
+    "adminJudges": "Judge Management",
+    "adminRounds": "Round Management",
+    "judgeDashboard": "Judge Dashboard",
+    "judgeScoring": "Scoring Tasks",
+    "docs": "Docs",
+    "leaderboard": "Leaderboard",
+    "wechat": "WeChat",
+    "weibo": "Weibo",
+    "linkedin": "LinkedIn"
+  }
+}
